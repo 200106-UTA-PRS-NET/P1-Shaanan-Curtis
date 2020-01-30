@@ -20,6 +20,29 @@ a:hover
     text-decoration:none;
 }
 
+li.nav-item div
+{
+    margin:1px;
+}
+li.nav-item div:hover
+{
+    transition-duration:1s;
+}
+li.nav-item div#nav1:hover
+{
+    background-color:rgb(228, 251, 247);
+    border-radius:40%;
+}
+li.nav-item div#nav2:hover
+{
+    background-color:rgb(249, 249, 230);
+    border-radius:10%;
+}
+li.nav-item div#nav3:hover
+{
+    background-color:rgb(248, 235, 246);
+    border-radius:20%;
+}
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
