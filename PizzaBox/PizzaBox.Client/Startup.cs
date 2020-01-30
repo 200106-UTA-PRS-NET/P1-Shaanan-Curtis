@@ -5,9 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PizzaBox.Storing.Interfaces;
+using PizzaBox.Storing.Repositories;
+//using PizzaBox.Storing.Entities;
 
 namespace PizzaBox.Client
 {
@@ -23,6 +27,10 @@ namespace PizzaBox.Client
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string connectionString = Configuration.GetConnectionString("PBDataSource");
+            services.AddDbContext<Storing.Entities.PIZZABOXContext>(options => options.UseSqlServer(connectionString));
+            services.AddTransient<IPizzaBoxRepository, PizzaBoxRepository>();
+     
             services.AddControllersWithViews();
         }
 
