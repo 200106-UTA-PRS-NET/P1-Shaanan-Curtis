@@ -8,8 +8,16 @@ a.navbar-brand {
 }
 
 /* Provide sufficient contrast against white background */
-a {
+a 
+{
   color: #0366d6;
+}
+
+a:hover
+{
+    color: aqua;
+    transition-duration:1s;
+    text-decoration:none;
 }
 
 .btn-primary {
