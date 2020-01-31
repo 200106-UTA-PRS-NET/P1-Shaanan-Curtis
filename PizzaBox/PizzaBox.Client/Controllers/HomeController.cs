@@ -20,26 +20,7 @@ namespace PizzaBox.Client.Controllers
 
         public IActionResult Index()
         {
-            return View();
-        }
 
-        public IActionResult Order()
-        {
-            return View();
-        }
-
-        public IActionResult Menu()
-        {
-            return View();
-        }
-
-        public IActionResult Locations()
-        {
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
             return View();
         }
 

@@ -15,8 +15,8 @@ a
 
 a:hover
 {
-    color: aqua;
-    transition-duration:1s;
+    color: rgb(9, 232, 255);
+    transition-duration:0.5s;
     text-decoration:none;
 }
 
@@ -43,6 +43,84 @@ li.nav-item div#nav3:hover
     background-color:rgb(248, 235, 246);
     border-radius:20%;
 }
+
+div.floating-container
+{
+    display:inline-block;
+}
+div.floating-item
+{
+    float:left;
+}
+
+div.menu-item
+{
+    font-size:large;
+    text-align:center;
+    padding:50px;
+    font-weight:bold;
+    color:darkslategrey;
+    border-style:solid;
+    border:2px;
+    border-color:red;
+    background-color:rgba(250, 238, 67, 0.75)
+}
+div.menu-item:hover
+{
+    padding:60px;
+    transition:padding 1s;
+    color:black;
+    font-weight:bolder;
+}
+div.order-btn
+{
+    background-color:red;
+    color:white;
+    font-weight:bold;
+    padding:20px;
+}
+div.order-btn:hover
+{
+    background-color:darkred;
+    font-weight:bolder;
+}
+
+div.button-list
+{
+    margin-left:10px;
+    font-weight:bold;
+    font-size:large;
+    color:darkslategrey;
+    border-style:solid;
+    border:2px;
+    border-color:grey;
+    padding:30px;
+}
+div.button-list:hover
+{
+    background-color:rgba(228, 251, 247, 0.3);
+    font-weight:bolder;
+    font-size:larger;
+    color:black;
+    border-color:aqua;
+}
+
+div.button-general 
+{
+    background-color: lightseagreen;
+    padding: 10px;
+    display: inline;
+    float: right;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+}
+div.button-general:hover
+{
+    background-color:aquamarine;
+    color:indigo;
+}
+
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;

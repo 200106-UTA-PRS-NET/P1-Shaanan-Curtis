@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body>
+<body style="height:100%;overflow-y:hidden;">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
@@ -22,17 +22,17 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <div id="nav1">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Order">Order Now</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Store" asp-action="Order">Order Now</a>
                             </div>
                         </li>
                         <li class="nav-item">
                             <div id="nav2">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Menu">Menu</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Store" asp-action="Menu">Menu</a>
                             </div>
                         </li>
                         <li class="nav-item">
                             <div id="nav3">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Locations">Locations</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Store" asp-action="Locations">Locations</a>
                             </div>
                         </li>
                     </ul>

@@ -1,0 +1,49 @@
+﻿@{ 
+    ViewData["Title"] = "Menu";
+}
+
+<h1>PIZZABOX MENU</h1>
+<div style="background-color:honeydew;padding:20px;width:100%;">
+    <h5>SPECIALTY PIZZAS</h5>
+</div>
+<table>
+    <tbody>
+        <tr>
+            <td>
+                <div class="menu-item">
+                    Vegan
+                    <br/>
+                    <a asp-controller="Store" asp-action="Order"><div class="order-btn">ORDER NOW</div></a>
+                </div>
+            </td>
+            <td>
+                <div class="menu-item">
+                    Pepperoni
+                    <br/>
+                    <a asp-controller="Store" asp-action="Order"><div class="order-btn">ORDER NOW</div></a>
+                </div>
+            </td>
+            <td>
+                <div class="menu-item">
+                    BBQ Chicken
+                    <br/>
+                    <a asp-controller="Store" asp-action="Order"><div class="order-btn">ORDER NOW</div></a>
+                </div>
+            </td>
+            <td>
+                <div class="menu-item">
+                    Meatball
+                    <br/>
+                    <a asp-controller="Store" asp-action="Order"><div class="order-btn">ORDER NOW</div></a>
+                </div>
+            </td>
+            <td>
+                <div class="menu-item">
+                    Supreme
+                    <br/>
+                    <a asp-controller="Store" asp-action="Order"><div class="order-btn">ORDER NOW</div></a>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
