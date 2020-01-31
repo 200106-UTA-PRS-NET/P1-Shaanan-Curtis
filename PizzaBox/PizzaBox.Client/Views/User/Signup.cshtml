@@ -5,6 +5,10 @@
 
 <h1>Sign Up</h1>
 <hr/>
+@if(ViewBag.User_Exists == true)
+{
+    <p style="color:red;">User already exists. If you need help signing back into your account, we can't help you right now.</p>
+}
 <form asp-controller="User" asp-action="ValidateSignup" method="post">
     Full Name:
     @Html.TextBoxFor(u=>u.user.FullName, new {placeholder="Enter Name", required="required"})

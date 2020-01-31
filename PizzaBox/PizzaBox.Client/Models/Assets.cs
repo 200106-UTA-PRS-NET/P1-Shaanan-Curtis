@@ -11,6 +11,7 @@ namespace PizzaBox.Client.Models
         public IEnumerable<Store> Stores;
         public User user = new User()
         {
+            FullName = "",
             Username = "",
             Pass = "",
             SessionLive = 0

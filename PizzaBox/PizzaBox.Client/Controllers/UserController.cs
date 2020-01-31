@@ -22,14 +22,18 @@ namespace PizzaBox.Client.Controllers
         }
 
         [HttpPost]
-        public string ValidateSignin(Models.Assets model)
+        public IActionResult ValidateSignin(Models.Assets model)
         {
             if(_PBrepository.UserAuthentication(model.user.Username, model.user.Pass) == null)
             {
-                return "Username/Password Incorrect";
+                ViewBag.Auth_Failure = true;
+                return View("Signin");
             }
-
-            return "Signing in";
+            ViewBag.Auth_Failure = false;
+            ViewBag.Session = true;
+            model.user.SessionLive = 1;
+            _PBrepository.UpdateUser(model.user);
+            return Redirect("/Home/Index");
         }
 
         public IActionResult Signup()
@@ -38,14 +42,26 @@ namespace PizzaBox.Client.Controllers
         }
 
         [HttpPost]
-        public string ValidateSignup(Models.Assets model)
+        public IActionResult ValidateSignup(Models.Assets model)
         {
             if(_PBrepository.GetUserById(model.user.Username) != null)
             {
-                return "User already exists";
+                ViewBag.User_Exists = true;
+                return View("Signup");
             }
 
-            return "Signing you up";
+            ViewBag.User_Exists = false;
+            model.user.SessionLive = 1;
+            _PBrepository.AddUser(model.user);
+            ViewBag.Session = true;
+            return Redirect("/Home/Index");
+        }
+
+        public IActionResult Signout()
+        {
+            //make a way to pass in user and set sessionlive = 0
+            ViewBag.Session = false;
+            return Redirect("/Home/Index");
         }
     }
 }
