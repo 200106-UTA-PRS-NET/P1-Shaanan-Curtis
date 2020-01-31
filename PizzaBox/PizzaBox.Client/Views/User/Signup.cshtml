@@ -1,18 +1,19 @@
-﻿@{ 
+﻿@model Assets
+@{ 
     ViewData["Title"] = "Sign Up";
 }
 
 <h1>Sign Up</h1>
 <hr/>
-<form>
+<form asp-controller="User" asp-action="ValidateSignup" method="post">
     Full Name:
-    <input type="text" required/>
+    @Html.TextBoxFor(u=>u.user.FullName, new {placeholder="Enter Name", required="required"})
     <br/><br/>
     Username:
-    <input type="text" required/>
+    @Html.TextBoxFor(u=>u.user.Username, new {placeholder="Enter Username", required="required"})
     <br/><br/>
     Password:
-    <input type="password" required/>
+    @Html.PasswordFor(u=>u.user.Pass, new {placeholder="Enter Password", required="required"})
     <br/><br/>
     <!--
      Verify Password: 

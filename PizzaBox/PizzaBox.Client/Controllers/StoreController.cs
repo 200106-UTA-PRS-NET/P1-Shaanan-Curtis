@@ -12,7 +12,7 @@ namespace PizzaBox.Client.Controllers
     {
         //Dependency Injection
         private readonly IPizzaBoxRepository _PBrepository;
-        private readonly Models.OrderAssets _OrderAssets = new Models.OrderAssets();
+        private readonly Models.Assets OrderAssets = new Models.Assets();
         public StoreController(IPizzaBoxRepository PBrepository)
         {
             _PBrepository = PBrepository;
@@ -31,8 +31,8 @@ namespace PizzaBox.Client.Controllers
         {
             //pass locations, orders, ordertype
             var stores = _PBrepository.GetAllStores();
-            _OrderAssets.Stores = stores;
-            return View(_OrderAssets);
+            OrderAssets.Stores = stores;
+            return View(OrderAssets);
         }
 
         public IActionResult Menu()

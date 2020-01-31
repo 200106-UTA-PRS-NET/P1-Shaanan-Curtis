@@ -10,6 +10,7 @@ namespace PizzaBox.Client.Controllers
     public class UserController : Controller
     {
         private readonly IPizzaBoxRepository _PBrepository;
+        private readonly Models.Assets UserAssets = new Models.Assets();
         public UserController(IPizzaBoxRepository PBrepository)
         {
             _PBrepository = PBrepository;
@@ -17,14 +18,34 @@ namespace PizzaBox.Client.Controllers
 
         public IActionResult Signin()
         {
-            //pass user
-            return View();
+            return View(UserAssets);
+        }
+
+        [HttpPost]
+        public string ValidateSignin(Models.Assets model)
+        {
+            if(_PBrepository.UserAuthentication(model.user.Username, model.user.Pass) == null)
+            {
+                return "Username/Password Incorrect";
+            }
+
+            return "Signing in";
         }
 
         public IActionResult Signup()
         {
-            //pass user
-            return View();
+            return View(UserAssets);
+        }
+
+        [HttpPost]
+        public string ValidateSignup(Models.Assets model)
+        {
+            if(_PBrepository.GetUserById(model.user.Username) != null)
+            {
+                return "User already exists";
+            }
+
+            return "Signing you up";
         }
     }
 }

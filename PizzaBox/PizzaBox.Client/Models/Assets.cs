@@ -6,8 +6,14 @@ using PizzaBox.Storing.Entities;
 
 namespace PizzaBox.Client.Models
 {
-    public class OrderAssets
+    public class Assets
     {
         public IEnumerable<Store> Stores;
+        public User user = new User()
+        {
+            Username = "",
+            Pass = "",
+            SessionLive = 0
+        };
     }
 }

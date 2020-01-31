@@ -1,9 +1,22 @@
-﻿@model OrderAssets
+﻿@model Assets
 @{
     ViewData["Title"] = "Order Online";
 }
 
-<h1>Order A Pizza</h1>
+<h1>Pick a Shop</h1>
 <hr />
-
+<table>
+    <tbody>
+        @foreach(var item in Model.Stores)
+        {
+            <tr>
+                <a asp-controller="Order" asp-action="Step1" asp-route-id="@item.StoreId">
+                    <div class="button-list">
+                        @item.City&emsp;&emsp;|&emsp;&emsp;@item.State
+                    </div>
+                </a>
+            </tr>
+        }
+    </tbody>
+</table>
 
