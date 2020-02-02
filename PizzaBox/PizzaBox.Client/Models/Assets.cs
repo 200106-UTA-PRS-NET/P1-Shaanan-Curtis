@@ -6,15 +6,13 @@ using PizzaBox.Storing.Entities;
 
 namespace PizzaBox.Client.Models
 {
-    public class Assets
+    public static class Assets
     {
-        public IEnumerable<Store> Stores;
-        public User user = new User()
-        {
-            FullName = "",
-            Username = "",
-            Pass = "",
-            SessionLive = 0
-        };
+        public static int Storeid { get; set; }
+        public static bool Session { get; set; }
+        public static string Current_user { get; set; }
+        public static IEnumerable<Store> Stores { get; set; }
     }
+
+    
 }

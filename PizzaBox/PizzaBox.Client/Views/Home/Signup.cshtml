@@ -1,0 +1,29 @@
+﻿@model PizzaBox.Storing.Entities.User
+@{
+    ViewData["Title"] = "Sign Up";
+}
+
+<h1>Sign Up</h1>
+<hr />
+
+@if (ViewBag.User_Exists == true)
+{
+    <p style="color:red;">User already exists. If you need help signing back into your account, we can't help you right now.</p>
+}
+
+<form asp-controller="Home" asp-action="Signup" method="post">
+    Full Name:
+    @Html.TextBoxFor(u => u.FullName, new { placeholder = "Enter Name", required = "required" })
+    <br /><br />
+    Username:
+    @Html.TextBoxFor(u => u.Username, new { placeholder = "Enter Username", required = "required" })
+    <br /><br />
+    Password:
+    @Html.PasswordFor(u => u.Pass, new { placeholder = "Enter Password", required = "required" })
+    <br /><br />
+    <!--
+     Verify Password:
+    <input type="password" required/>
+    -->
+    <input type="submit" required />
+</form>

@@ -10,8 +10,7 @@ namespace PizzaBox.Client.Controllers
     {
         public IActionResult Step1(int id)
         {
-
-            return View();
+            return View(id);
         }
     }
 }

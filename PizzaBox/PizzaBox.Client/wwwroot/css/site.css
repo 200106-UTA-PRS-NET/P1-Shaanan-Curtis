@@ -2,111 +2,85 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Provide sufficient contrast against white background */
-a 
-{
-  color: #0366d6;
+a {
+    color: #0366d6;
 }
 
-a:hover
-{
-    color: rgb(9, 232, 255);
-    transition-duration:0.5s;
-    text-decoration:none;
+    a:hover {
+        color: rgb(9, 232, 255);
+        transition-duration: 0.5s;
+        text-decoration: none;
+    }
+
+li.nav-item div {
+    margin: 1px;
 }
 
-li.nav-item div
-{
-    margin:1px;
-}
-li.nav-item div:hover
-{
-    transition-duration:1s;
-}
-li.nav-item div#nav1:hover
-{
-    background-color:rgb(228, 251, 247);
-    border-radius:40%;
-}
-li.nav-item div#nav2:hover
-{
-    background-color:rgb(249, 249, 230);
-    border-radius:10%;
-}
-li.nav-item div#nav3:hover
-{
-    background-color:rgb(248, 235, 246);
-    border-radius:20%;
+    li.nav-item div:hover {
+        transition-duration: 1s;
+    }
+
+    li.nav-item div#nav1:hover {
+        background-color: rgb(228, 251, 247);
+        border-radius: 40%;
+    }
+
+    li.nav-item div#nav2:hover {
+        background-color: rgb(249, 249, 230);
+        border-radius: 10%;
+    }
+
+    li.nav-item div#nav3:hover {
+        background-color: rgb(248, 235, 246);
+        border-radius: 20%;
+    }
+
+div.floating-container {
+    display: inline-block;
 }
 
-div.floating-container
-{
-    display:inline-block;
-}
-div.floating-item
-{
-    float:left;
+div.floating-item {
+    float: left;
 }
 
-div.menu-item
-{
-    font-size:large;
-    text-align:center;
-    padding:50px;
-    font-weight:bold;
-    color:darkslategrey;
-    border-style:solid;
-    border:2px;
-    border-color:red;
-    background-color:rgba(250, 238, 67, 0.75)
-}
-div.menu-item:hover
-{
-    padding:60px;
-    transition:padding 1s;
-    color:black;
-    font-weight:bolder;
-}
-div.order-btn
-{
-    background-color:red;
-    color:white;
-    font-weight:bold;
-    padding:20px;
-}
-div.order-btn:hover
-{
-    background-color:darkred;
-    font-weight:bolder;
+div.order-btn {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    padding: 20px;
 }
 
-div.button-list
-{
-    margin-left:10px;
-    font-weight:bold;
-    font-size:large;
-    color:darkslategrey;
-    border-style:solid;
-    border:2px;
-    border-color:grey;
-    padding:30px;
-}
-div.button-list:hover
-{
-    background-color:rgba(228, 251, 247, 0.3);
-    font-weight:bolder;
-    font-size:larger;
-    color:black;
-    border-color:aqua;
+    div.order-btn:hover {
+        background-color: darkred;
+        font-weight: bolder;
+    }
+
+div.button-list {
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: large;
+    color: darkslategrey;
+    border-style: solid;
+    border: 2px;
+    border-color: grey;
+    padding: 30px;
 }
 
-div.button-general 
-{
+    div.button-list:hover {
+        background-color: rgba(228, 251, 247, 0.3);
+        font-weight: bolder;
+        font-size: larger;
+        color: black;
+        border-color: aqua;
+    }
+
+div.button-general {
     background-color: lightseagreen;
     padding: 10px;
     display: inline;
@@ -115,66 +89,69 @@ div.button-general
     color: white;
     font-weight: bold;
 }
-div.button-general:hover
-{
-    background-color:aquamarine;
-    color:indigo;
-}
+
+    div.button-general:hover {
+        background-color: aquamarine;
+        color: indigo;
+    }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
+
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
 }

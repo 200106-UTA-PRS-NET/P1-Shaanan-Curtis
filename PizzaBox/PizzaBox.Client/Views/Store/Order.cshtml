@@ -1,5 +1,4 @@
-﻿@model Assets
-@{
+﻿@{
     ViewData["Title"] = "Order Online";
 }
 
@@ -7,7 +6,7 @@
 <hr />
 <table>
     <tbody>
-        @foreach(var item in Model.Stores)
+        @foreach (var item in Assets.Stores)
         {
             <tr>
                 <a asp-controller="Order" asp-action="Step1" asp-route-id="@item.StoreId">

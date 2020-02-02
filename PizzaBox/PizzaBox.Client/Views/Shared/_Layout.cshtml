@@ -35,6 +35,14 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Store" asp-action="Locations">Locations</a>
                             </div>
                         </li>
+                        @if (Assets.Session == true)
+                        {
+                            <li class="nav-item">
+                                <div id="nav3">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Signout">Logout</a>
+                                </div>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

@@ -1,0 +1,22 @@
+﻿@model PizzaBox.Storing.Entities.User
+@{
+    ViewData["Title"] = "Sign In";
+}
+
+<h1>Sign In</h1>
+<hr />
+
+@if (ViewBag.Auth_Error == true)
+{
+    <p style="color:red;">Username/password authentication failed.</p>
+}
+
+<form asp-controller="Home" asp-action="Signin" method="post">
+    Username:
+    @Html.TextBoxFor(u=>u.Username, new { placeholder = "Enter Username", required = "required" })
+    <br /><br />
+    Password:
+    @Html.PasswordFor(u => u.Pass, new { placeholder = "Enter Password", required = "required" })
+    <br /><br />
+    <input type="submit" />
+</form>

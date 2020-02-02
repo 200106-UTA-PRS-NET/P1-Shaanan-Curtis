@@ -1,16 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Session;
 using PizzaBox.Storing.Interfaces;
 using PizzaBox.Storing.Repositories;
+using System;
 //using PizzaBox.Storing.Entities;
 
 namespace PizzaBox.Client
@@ -30,8 +27,16 @@ namespace PizzaBox.Client
             string connectionString = Configuration.GetConnectionString("PBDataSource");
             services.AddDbContext<Storing.Entities.PIZZABOXContext>(options => options.UseSqlServer(connectionString));
             services.AddTransient<IPizzaBoxRepository, PizzaBoxRepository>();
-     
+
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+            });
+
             services.AddControllersWithViews();
+            services.AddDistributedMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +59,7 @@ namespace PizzaBox.Client
 
             app.UseAuthorization();
 
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

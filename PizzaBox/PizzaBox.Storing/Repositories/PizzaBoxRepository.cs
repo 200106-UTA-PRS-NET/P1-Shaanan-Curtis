@@ -198,7 +198,7 @@ namespace PizzaBox.Storing.Repositories
 
         public User UserAuthentication(string uname, string pass)
         {
-            if (!(_dbContext.User.Where(u => u.Username.Contains(uname) && u.Pass.Contains(pass)).Count() > 0))
+            if (_dbContext.User.Where(u => u.Username.Contains(uname) && u.Pass.Contains(pass)).Count() < 1)
             {
                 return null;
             }
@@ -222,6 +222,15 @@ namespace PizzaBox.Storing.Repositories
             save();
         }
 
+        public bool IsSignedIn(string username)
+        {
+            var query = _dbContext.User.Where(u => u.Username == username);
+
+            if(query.SingleOrDefault().SessionLive == 1)
+                return true;
+
+            return false;
+        }
         public void save()
         {
             //logger.Info("Saving changes to database");
