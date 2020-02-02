@@ -24,8 +24,13 @@ namespace PizzaBox.Client.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string error)
         {
+            if(error != null && error == "logout")
+            {
+                Signout();
+            }
+
             return View();
         }
 
@@ -83,7 +88,10 @@ namespace PizzaBox.Client.Controllers
             ViewBag.User_Exists = false;
             model.SessionLive = 1;
             _PBrepository.AddUser(model);
-
+            if(Assets.Session == true)
+            {
+                return View("Signin");
+            }
             Assets.Session = true;
             return View("Index");
         }

@@ -13,6 +13,4 @@ namespace PizzaBox.Client.Models
         public static string Current_user { get; set; }
         public static IEnumerable<Store> Stores { get; set; }
     }
-
-    
 }
