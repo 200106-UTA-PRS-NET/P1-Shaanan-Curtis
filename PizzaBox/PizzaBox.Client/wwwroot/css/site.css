@@ -1,6 +1,22 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+.order-container {
+    width:700px;
+    height:700px;
+    margin:auto;
+    visibility:hidden;
+    text-align:center;
+}
+
+.order-container:target
+{
+    background-color:aliceblue;
+    visibility:visible;
+}
+
+
+
 a.navbar-brand {
     white-space: normal;
     text-align: center;
@@ -56,10 +72,10 @@ div.order-btn {
     padding: 20px;
 }
 
-    div.order-btn:hover {
-        background-color: darkred;
-        font-weight: bolder;
-    }
+div.order-btn:hover {
+    background-color: darkred;
+    font-weight: bolder;
+}
 
 div.button-list {
     margin-left: 10px;
@@ -72,13 +88,13 @@ div.button-list {
     padding: 30px;
 }
 
-    div.button-list:hover {
-        background-color: rgba(228, 251, 247, 0.3);
-        font-weight: bolder;
-        font-size: larger;
-        color: black;
-        border-color: aqua;
-    }
+div.button-list:hover {
+    background-color: rgba(228, 251, 247, 0.3);
+    font-weight: bolder;
+    font-size: larger;
+    color: black;
+    border-color: aqua;
+}
 
 div.button-general {
     background-color: lightseagreen;
@@ -90,10 +106,10 @@ div.button-general {
     font-weight: bold;
 }
 
-    div.button-general:hover {
-        background-color: aquamarine;
-        color: indigo;
-    }
+div.button-general:hover {
+    background-color: aquamarine;
+    color: indigo;
+}
 
 .btn-primary {
     color: #fff;

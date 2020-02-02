@@ -1,6 +1,66 @@
-﻿@model int
+﻿@model PizzaBox.Storing.Entities.Store
 @{ 
     ViewData["Title"] = "Order Online";
+    Layout = "_Layout1";
 }
+<script>
+    function Hide(id) {
+        document.getElementById(id).style.visibility = 'hidden';
+    }
+    function Show(id) {
+        document.getElementById(id).style.visibility = 'visible';
+    }
+</script>
+<p>PizzaBox @@ @Model.City</p>
 
-<p>You chose Location @Model</p>
+<!--Choose Preset or Custom-->
+<div id="me" onclick="Hide('me')">
+    <a href="#1">Customize Your Order</a><br/>
+    <a href="#2">Specialty Pizzas</a><br/>
+</div>
+
+<div class="order-container">
+    <div class="order-container" id="1" style="position:absolute;">
+        <h3>Custom Order</h3>
+        <br/>
+        <div style="display:inline-block;">
+            <div style="float:left;">
+                <a href="#" onclick="Show('me')">Back</a>
+            </div>
+            <div style="float:left;padding:280px;"></div>
+            <div style="float:left;">
+                <a href="#">Next</a>
+            </div>
+        </div>
+    </div>
+    <div class="order-container" id="2" style="position:absolute;">
+        <h3>Specialty Pizzas</h3>
+        <br />
+        <div style="display:inline-block;">
+            <div style="float:left;">
+                <a href="#" onclick="Show('me')">Back</a>
+            </div>
+            <div style="float:left;padding:280px;"></div>
+            <div style="float:left;">
+                <a href="#">Next</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--
+<div>
+<div id="me">
+<a href="#1">Customize Your Order</a>
+<br/>
+<a href="#2">Specialty Pizzas</a>
+</div>
+</div>
+<section id="1" style="visibility:hidden;" onclick="Hide(1,2)">
+    Hello
+</section>
+<div>
+</div>
+<section id="2" style="visibility:hidden;">
+    Hello again
+</section>
+-->
