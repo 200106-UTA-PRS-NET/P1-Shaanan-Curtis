@@ -1,4 +1,4 @@
-﻿@model PizzaBox.Storing.Entities.Store
+﻿@model OrderInfoModel
 @{ 
     ViewData["Title"] = "Order Online";
     Layout = "_Layout1";
@@ -11,31 +11,68 @@
         document.getElementById(id).style.visibility = 'visible';
     }
 </script>
-<p>PizzaBox @@ @Model.City</p>
+<p>PizzaBox @@ @PizzaBox.Client.Models.Assets.ShopInfo.City</p>
 
-<!--Choose Preset or Custom-->
-<div id="me" onclick="Hide('me')">
-    <a href="#1">Customize Your Order</a><br/>
-    <a href="#2">Specialty Pizzas</a><br/>
+<div id="me">
+    <a href="#custom" onclick="Hide('me')">Customize Your Order</a><br/>
+    <a href="#preset" onclick="Hide('me')">Specialty Pizzas</a><br/>
 </div>
 
 <div class="order-container">
-    <div class="order-container" id="1" style="position:absolute;">
+    <div class="order-container" id="custom" style="position:absolute;">
         <h3>Custom Order</h3>
         <br/>
-        <div style="display:inline-block;">
-            <div style="float:left;">
-                <a href="#" onclick="Show('me')">Back</a>
-            </div>
-            <div style="float:left;padding:280px;"></div>
-            <div style="float:left;">
-                <a href="#">Next</a>
-            </div>
-        </div>
     </div>
-    <div class="order-container" id="2" style="position:absolute;">
-        <h3>Specialty Pizzas</h3>
+
+    <div class="order-container" id="preset" style="position:absolute;">
+        <h3>Specialty Order</h3>
         <br />
+        @using (Html.BeginForm("Step2", "Order", FormMethod.Post, new { role = "form" }))
+        {
+            <h6>Amount Pizzas</h6>
+            @Html.EditorFor(model => model.NumPresets, new { htmlAttributes = new { min = 1, max = 100 } })
+            <br /><br />
+            <h6>Size</h6>
+            @Html.DropDownListFor(model => model.Size, Model.Sizes, "- select a size -", new { style = "width:160px;margin:auto;", @class = "form-control", required = "required" })
+            <br />
+            <h6>Crust</h6>
+            <p>@Html.RadioButtonFor(model => model.Crust, "Thin", new { required = "required" }) Thin</p>
+            <p>@Html.RadioButtonFor(model => model.Crust, "Thick", new { required = "required" }) Thick</p>
+
+            <h6>Choose a Pizza</h6>
+            <p>@Html.RadioButtonFor(model => model.Pizza, "Vegan", new { required = "required" }) Vegan</p>
+            <p>@Html.RadioButtonFor(model => model.Pizza, "Pepperoni", new { required = "required" }) Pepperoni</p>
+            <p>@Html.RadioButtonFor(model => model.Pizza, "BBQ Chicken", new { required = "required" }) BBQ Chicken</p>
+            <p>@Html.RadioButtonFor(model => model.Pizza, "Meatball", new { required = "required" }) Meatball</p>
+            <p>@Html.RadioButtonFor(model => model.Pizza, "Supreme", new { required = "required" }) Supreme</p>
+            <p>@Html.RadioButtonFor(model => model.Pizza, "Greek", new { required = "required" }) Greek</p>
+            <br/>
+            <!--Navigation-->
+            <div style="margin:auto;">
+                <input type="submit" value="Submit Order"/>
+                <br/><br/>
+                <a href="#" onclick="Show('me')"><input type="button" value="Back"/></a>
+            </div>
+        }
+
+
+    </div>
+</div>
+@*
+<!--UI Later-->
+<!--Choose Preset or Custom-->
+<div id="me" onclick="Hide('me')">
+    <a href="#custom">Customize Your Order</a><br/>
+    <a href="#preset">Specialty Pizzas</a><br/>
+</div>
+
+<div class="order-container">
+    <!--CUSTOM PIZZA-->
+    <div class="order-container" id="custom" style="position:absolute;">
+        <h3>Custom Order</h3>
+        <br/>
+
+        <!--Navigation-->
         <div style="display:inline-block;">
             <div style="float:left;">
                 <a href="#" onclick="Show('me')">Back</a>
@@ -46,21 +83,85 @@
             </div>
         </div>
     </div>
+
+    <!--PRESET PIZZA-->
+    <div class="order-container" id="preset" style="position:absolute;"> <!--overflow-y:visible-->
+        <h3>Specialty Pizzas</h3><br/>
+
+        <!--Choose Vegan-->
+        <div class="specialty-buttons">
+            <span style="font-weight:bold;">Vegan</span>
+            @Html.EditorFor(model=>model.NumPresets, new {htmlAttributes = new {min = 1, max = 100}})
+        </div>
+        <br/><br/>
+
+        <!--Choose Pepperoni-->
+        <div class="specialty-buttons">
+            <span style="font-weight:bold;">Pepperoni</span>
+            <input type="number" min="1" max="100" title="Enter amount" />
+            <a href="#pepperoni">Add</a>
+        </div>
+        <br/><br/>
+
+        <!--Choose BBQ-->
+        <div class="specialty-buttons">
+            <span style="font-weight:bold;">BBQ Chicken</span>
+            <input type="number" min="1" max="100" title="Enter amount" />
+            <a href="#bbq">Add</a>
+        </div>
+        <br/><br/>
+
+        <!--Choose Meatball-->
+        <div class="specialty-buttons">
+            <span style="font-weight:bold;">Meatball</span>
+            <input type="number" min="1" max="100" title="Enter amount" />
+            <a href="#meatball">Add</a>
+        </div>
+        <br/><br/>
+
+        <!--Choose Supreme-->
+        <div class="specialty-buttons">
+            <span style="font-weight:bold;">Supreme</span>
+            <input type="number" min="1" max="100" title="Enter amount" />
+            <a href="#supreme">Add</a>
+        </div>
+        <br/><br/>
+
+        <!--Choose Greek-->
+        <div class="specialty-buttons">
+            <span style="font-weight:bold;">Greek</span>
+            <input type="number" min="1" max="100" title="Enter amount" />
+            <a href="#greek">Add</a>
+        </div>
+        <br/>
+        
+        <!--Navigation-->
+        <div style="display:inline-block;">
+            <div style="float:left;">
+                <a href="#" onclick="Show('me')">Back</a>
+            </div>
+            <div style="float:left;padding:280px;"></div>
+        </div>
+    </div>
+
+    <!--PRESET USER CHOSE-->
+    <div class="order-container" id="vegan" style="position:absolute;">
+        Vegan
+    </div>
+    <div class="order-container" id="pepperoni" style="position:absolute;">
+        Pepperoni
+    </div>
+    <div class="order-container" id="bbq" style="position:absolute;">
+        BBQ
+    </div>
+    <div class="order-container" id="meatball" style="position:absolute;">
+        Meatball
+    </div>
+    <div class="order-container" id="supreme" style="position:absolute;">
+        Supreme
+    </div>
+    <div class="order-container" id="greek" style="position:absolute;">
+        Greek
+    </div>
 </div>
-<!--
-<div>
-<div id="me">
-<a href="#1">Customize Your Order</a>
-<br/>
-<a href="#2">Specialty Pizzas</a>
-</div>
-</div>
-<section id="1" style="visibility:hidden;" onclick="Hide(1,2)">
-    Hello
-</section>
-<div>
-</div>
-<section id="2" style="visibility:hidden;">
-    Hello again
-</section>
--->
+*@
