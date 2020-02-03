@@ -14,7 +14,7 @@
 <p>PizzaBox @@ @PizzaBox.Client.Models.Assets.ShopInfo.City</p>
 
 <div id="me">
-    <a href="#custom" onclick="Hide('me')">Customize Your Order</a><br/>
+    <a href="#custom" onclick="Hide('me')" title="Currently Unavailable">Customize Your Order</a><br/>
     <a href="#preset" onclick="Hide('me')">Specialty Pizzas</a><br/>
 </div>
 
@@ -22,6 +22,12 @@
     <div class="order-container" id="custom" style="position:absolute;">
         <h3>Custom Order</h3>
         <br/>
+        Custom orders are currently unavailable. Please try again later.
+        <br/><br/>
+        <!--Navigation-->
+        <div style="margin:auto;">
+            <a href="#" onclick="Show('me')"><input type="button" value="Back"/></a>
+        </div>
     </div>
 
     <div class="order-container" id="preset" style="position:absolute;">
@@ -47,7 +53,7 @@
             <p>@Html.RadioButtonFor(model => model.Pizza, "Supreme", new { required = "required" }) Supreme</p>
             <p>@Html.RadioButtonFor(model => model.Pizza, "Greek", new { required = "required" }) Greek</p>
             <br/>
-            <!--Navigation-->
+            <!--Submit + Navigation-->
             <div style="margin:auto;">
                 <input type="submit" value="Submit Order"/>
                 <br/><br/>

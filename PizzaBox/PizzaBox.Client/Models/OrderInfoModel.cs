@@ -16,8 +16,8 @@ namespace PizzaBox.Client.Models
         public int NumPresets { get; set; }
 
         // This property will hold number of custom pizzas, selected by user
-        [Required]
-        public int NumCustoms { get; set; }
+        //[Required]
+        //public int NumCustoms { get; set; }
         
         // This property will hold the selected size
         public string Size { get; set; }
@@ -33,6 +33,6 @@ namespace PizzaBox.Client.Models
         [Display(Name ="Specialty Pizzas")]
         public string Pizza { get; set; }
 
-        public string[] Toppings { get; set; }
+        //public string[] Toppings { get; set; }
     }
 }

@@ -1,5 +1,13 @@
-﻿@{ 
+﻿@model OrderInfoModel
+@{ 
     ViewData["Title"] = "Order Online";
 }
 
-<p>You are now at Step2</p>
+<p>Below is your information:</p>
+<p>
+    Hi @Assets.Current_user <br/>
+    You ordered from: @Assets.ShopInfo.City, @Assets.ShopInfo.State <br/>
+    Total Pizzas as of now: @Assets.Total_pizzas <br/>
+    Total Cost as of now: $@Assets.Order_cost <br/>
+    This will go in our database: @Assets.Preset_seq <br/>
+</p>

@@ -66,6 +66,7 @@ namespace PizzaBox.Client.Controllers
             u.SessionLive = 1;
             _PBrepository.UpdateUser(u);
 
+            Assets.Current_user = u.Username;
             Assets.Session = true;
             return View("Index");
         }
@@ -92,6 +93,7 @@ namespace PizzaBox.Client.Controllers
             {
                 return View("Signin");
             }
+            Assets.Current_user = model.Username;
             Assets.Session = true;
             return View("Index");
         }
@@ -104,6 +106,7 @@ namespace PizzaBox.Client.Controllers
             //can't deploy on azure using Identity
             //using static session for now (signin rendered pointless)
 
+            Assets.Current_user = "";
             Assets.Session = false;
             return View("Index");
         }
