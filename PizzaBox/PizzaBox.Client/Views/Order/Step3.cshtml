@@ -1,10 +1,6 @@
 ﻿@model List<PreviewOrderModel>
 @{
-    ViewData["Title"] = "Order Online";
-    //(make partial later)
-            //previews cart
-            //shows Add to Order
-            //shows Submit Order
+    ViewData["Title"] = "Order Confirmation";
 }
 
 <div class="shopping-cart">
@@ -25,11 +21,25 @@
                     </tr>
                 }
                 <tr class="d-table-row">
-                    <td class="d-table-cell" style="font-weight:bold">Total:</td>
+                    <td class="d-table-cell" style="font-weight:bold">Subtotal:</td>
                     <td class="d-table-cell"></td>
                     <td class="d-table-cell"></td>
                     <td class="d-table-cell"></td>
                     <td class="d-table-cell" style="font-weight:bold">$@decimal.Round(Assets.Subtotal,2)</td>
+                </tr>
+                <tr class="d-table-row">
+                    <td class="d-table-cell" style="font-weight:bold">Tax:</td>
+                    <td class="d-table-cell"></td>
+                    <td class="d-table-cell"></td>
+                    <td class="d-table-cell"></td>
+                    <td class="d-table-cell" style="font-weight:bold">$@decimal.Round(Assets.Tax,2)</td>
+                </tr>
+                <tr class="d-table-row">
+                    <td class="d-table-cell" style="font-weight:bold">Total:</td>
+                    <td class="d-table-cell"></td>
+                    <td class="d-table-cell"></td>
+                    <td class="d-table-cell"></td>
+                    <td class="d-table-cell" style="font-weight:bold">$@decimal.Round(Assets.Order_Total,2)</td>
                 </tr>
             </tbody>
         </table>
@@ -37,8 +47,8 @@
     <br />
     <!--Submit Order + Add To Order-->
     <div style="margin:auto;">
-        <a asp-controller="Order" asp-action="Step1" asp-route-id=@Assets.ShopInfo.StoreId><input type="button" value="ADD MORE" /></a>
+        <a asp-controller="Order" asp-action="Step2"><input type="button" value="GO BACK" /></a>
         <br /><br />
-        <a asp-controller="Order" asp-action="Step3"><input type="button" value="CHECKOUT" /></a>
+        <a asp-controller="Order" asp-action="Confirmation"><input type="button" value="CONFIRM" /></a>
     </div>
 </div>

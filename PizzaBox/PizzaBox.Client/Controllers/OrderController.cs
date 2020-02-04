@@ -12,8 +12,7 @@ namespace PizzaBox.Client.Controllers
     public class OrderController : Controller
     {
         private readonly IPizzaBoxRepository _PBrepository;
-        private readonly OrderInfoModel order_information = new OrderInfoModel();
-
+        private bool computed;
         public OrderController(IPizzaBoxRepository PBrepository)
         {
             _PBrepository = PBrepository;
@@ -21,210 +20,311 @@ namespace PizzaBox.Client.Controllers
 
         public IActionResult Step1(int id)
         {
-            Models.Assets.ShopInfo = _PBrepository.GetStoreById(id);
+            if (Models.Assets.Session == false)
+            {
+                return Redirect("~/Home/Signin");
+            }
 
+            Assets.ShopInfo = _PBrepository.GetStoreById(id);
             var sizes = GetAllSizes();
-            var model = new OrderInfoModel();
+            var model = new TakeOrderModel();
             model.Sizes = GetSelectListItems(sizes);
 
             return View(model);
         }
 
-        public IActionResult Step2(OrderInfoModel model)
+        public IActionResult Step2(TakeOrderModel model)
         {
-            //Assets.Total_pizzas += model.NumCustoms;
-            Assets.Total_pizzas += model.NumPresets;
-            //Assets.Custom_seq += model.NumCustoms.ToString();
-            Assets.Preset_seq += model.NumPresets.ToString();
-
-            //ADD TO TOTAL COST FOR THIS ORDER
-            //For Style of Pizza
-            switch(model.Pizza)
+            if (Models.Assets.Session == false)
             {
-                case "Vegan":
-                    switch(model.Size)
-                    {
-                        case "Small":
-                            Assets.Order_cost += (4.00m * model.NumPresets);
-                            break;
-                        case "Medium":
-                            Assets.Order_cost += (8.00m * model.NumPresets);
-                            break;
-                        case "Large":
-                            Assets.Order_cost += (12.00m * model.NumPresets);
-                            break;
-                    }
-                    break;
-                case "Pepperoni":
-                    switch(model.Size)
-                    {
-                        case "Small":
-                            Assets.Order_cost += (5.00m * model.NumPresets);
-                            break;
-                        case "Medium":
-                            Assets.Order_cost += (10.00m * model.NumPresets);
-                            break;
-                        case "Large":
-                            Assets.Order_cost += (15.00m * model.NumPresets);
-                            break;
-                    }
-                    break;
-                case "BBQ Chicken":
-                    switch(model.Size)
-                    {
-                        case "Small":
-                            Assets.Order_cost += (6.00m * model.NumPresets);
-                            break;
-                        case "Medium":
-                            Assets.Order_cost += (12.00m * model.NumPresets);
-                            break;
-                        case "Large":
-                            Assets.Order_cost += (18.00m * model.NumPresets);
-                            break;
-                    }
-                    break;
-                case "Meatball":
-                    switch(model.Size)
-                    {
-                        case "Small":
-                            Assets.Order_cost += (7.00m * model.NumPresets);
-                            break;
-                        case "Medium":
-                            Assets.Order_cost += (14.00m * model.NumPresets);
-                            break;
-                        case "Large":
-                            Assets.Order_cost += (21.00m * model.NumPresets);
-                            break;
-                    }
-                    break;
-                case "Supreme":
-                    switch(model.Size)
-                    {
-                        case "Small":
-                            Assets.Order_cost += (8.00m * model.NumPresets);
-                            break;
-                        case "Medium":
-                            Assets.Order_cost += (16.00m * model.NumPresets);
-                            break;
-                        case "Large":
-                            Assets.Order_cost += (24.00m * model.NumPresets);
-                            break;
-                    }
-                    break;
-                case "Greek":
-                    switch(model.Size)
-                    {
-                        case "Small":
-                            Assets.Order_cost += (9.00m * model.NumPresets);
-                            break;
-                        case "Medium":
-                            Assets.Order_cost += (18.00m * model.NumPresets);
-                            break;
-                        case "Large":
-                            Assets.Order_cost += (27.00m * model.NumPresets);
-                            break;
-                    }
-                    break;
-                    /*
-                case "Custom":
-                    switch(model.Size)
-                    {
-                        case "Small":
-                            Assets.Order_cost += (3 * model.NumCustoms);
-                            break;
-                        case "Medium":
-                            Assets.Order_cost += (6 * model.NumCustoms);
-                            break;
-                        case "Large":
-                            Assets.Order_cost += (9 * model.NumCustoms);
-                            break;
-                    }
-                    break;
-                    */
+                return Redirect("~/Home/Signin");
             }
-
-            /*
-            //For toppings
-            if(model.Toppings.Length > 0)
+            if (!computed)
             {
-                foreach(var t in model.Toppings)
+                computed = true;
+
+                Assets.Total_pizzas += model.NumPresets;
+                Assets.NumPresets += model.NumPresets;
+                //Assets.Total_pizzas += model.NumCustoms;
+                //Assets.Custom_seq += model.NumCustoms.ToString();
+
+                //ADD TO TOTAL COST FOR THIS ORDER
+                decimal icost = 0.00m;
+                ///for pizza choice
+                switch (model.Pizza)
                 {
-                    switch(t)
-                    {
-                        case "Veggies/Fruit":
-                            Assets.Order_cost += 0.50m;
-                            break;
-                        case "Pepperoni":
-                            Assets.Order_cost += 1;
-                            break;
-                        case "Chicken":
-                            Assets.Order_cost += 1;
-                            break;
-                        case "Meatballs":
-                            Assets.Order_cost += 3;
-                            break;
-                    }
+                    case "Vegan":
+                        switch (model.Size)
+                        {
+                            case "Small":
+                                Assets.Subtotal += (4.00m * model.NumPresets);
+                                icost += (4.00m * model.NumPresets);
+                                break;
+                            case "Medium":
+                                Assets.Subtotal += (8.00m * model.NumPresets);
+                                icost += (8.00m * model.NumPresets);
+                                break;
+                            case "Large":
+                                Assets.Subtotal += (12.00m * model.NumPresets);
+                                icost += (12.00m * model.NumPresets);
+                                break;
+                        }
+                        break;
+                    case "Pepperoni":
+                        switch (model.Size)
+                        {
+                            case "Small":
+                                Assets.Subtotal += (5.00m * model.NumPresets);
+                                icost += (5.00m * model.NumPresets);
+                                break;
+                            case "Medium":
+                                Assets.Subtotal += (10.00m * model.NumPresets);
+                                icost += (10.00m * model.NumPresets);
+                                break;
+                            case "Large":
+                                Assets.Subtotal += (15.00m * model.NumPresets);
+                                icost += (15.00m * model.NumPresets);
+                                break;
+                        }
+                        break;
+                    case "BBQ Chicken":
+                        switch (model.Size)
+                        {
+                            case "Small":
+                                Assets.Subtotal += (6.00m * model.NumPresets);
+                                icost += (6.00m * model.NumPresets);
+                                break;
+                            case "Medium":
+                                Assets.Subtotal += (12.00m * model.NumPresets);
+                                icost += (12.00m * model.NumPresets);
+                                break;
+                            case "Large":
+                                Assets.Subtotal += (18.00m * model.NumPresets);
+                                icost += (18.00m * model.NumPresets);
+                                break;
+                        }
+                        break;
+                    case "Meatball":
+                        switch (model.Size)
+                        {
+                            case "Small":
+                                Assets.Subtotal += (7.00m * model.NumPresets);
+                                icost += (7.00m * model.NumPresets);
+                                break;
+                            case "Medium":
+                                Assets.Subtotal += (14.00m * model.NumPresets);
+                                icost += (14.00m * model.NumPresets);
+                                break;
+                            case "Large":
+                                Assets.Subtotal += (21.00m * model.NumPresets);
+                                icost += (21.00m * model.NumPresets);
+                                break;
+                        }
+                        break;
+                    case "Supreme":
+                        switch (model.Size)
+                        {
+                            case "Small":
+                                Assets.Subtotal += (8.00m * model.NumPresets);
+                                icost += (8.00m * model.NumPresets);
+                                break;
+                            case "Medium":
+                                Assets.Subtotal += (16.00m * model.NumPresets);
+                                icost += (16.00m * model.NumPresets);
+                                break;
+                            case "Large":
+                                Assets.Subtotal += (24.00m * model.NumPresets);
+                                icost += (24.00m * model.NumPresets);
+                                break;
+                        }
+                        break;
+                    case "Greek":
+                        switch (model.Size)
+                        {
+                            case "Small":
+                                Assets.Subtotal += (9.00m * model.NumPresets);
+                                icost += (9.00m * model.NumPresets);
+                                break;
+                            case "Medium":
+                                Assets.Subtotal += (18.00m * model.NumPresets);
+                                icost += (18.00m * model.NumPresets);
+                                break;
+                            case "Large":
+                                Assets.Subtotal += (27.00m * model.NumPresets);
+                                icost += (27.00m * model.NumPresets);
+                                break;
+                        }
+                        break;
+                        /*
+                    case "Custom":
+                        switch(model.Size)
+                        {
+                            case "Small":
+                                Assets.Order_cost += (3 * model.NumCustoms);
+                                break;
+                            case "Medium":
+                                Assets.Order_cost += (6 * model.NumCustoms);
+                                break;
+                            case "Large":
+                                Assets.Order_cost += (9 * model.NumCustoms);
+                                break;
+                        }
+                        break;
+                        */
                 }
-                
-            }
-            */
 
+                /*
+                //For toppings
+                if(model.Toppings.Length > 0)
+                {
+                    foreach(var t in model.Toppings)
+                    {
+                        switch(t)
+                        {
+                            case "Veggies/Fruit":
+                                Assets.Order_cost += 0.50m;
+                                break;
+                            case "Pepperoni":
+                                Assets.Order_cost += 1;
+                                break;
+                            case "Chicken":
+                                Assets.Order_cost += 1;
+                                break;
+                            case "Meatballs":
+                                Assets.Order_cost += 3;
+                                break;
+                        }
+                    }
 
-            //APPEND TO SEQUENCE FOR THIS ORDER
-            switch(model.Size)
-            {
-                case "Small":
-                    /*
-                    if (model.NumCustoms > 0)
-                        Assets.Custom_seq += 'S';
-                    else if (model.NumPresets > 0)
+                }
+                */
+
+                //VALIDATE ORDER BEFORE ADDING TO SEQUENCE
+                PreviewOrderModel OrderItem = new PreviewOrderModel();
+                OrderItem.Amount_Pizzas = model.NumPresets;
+                OrderItem.Size = model.Size;
+                OrderItem.Crust = model.Crust;
+                OrderItem.Style_Pizza = model.Pizza;
+                OrderItem.Item_Cost = icost;
+                Assets.Tax = Assets.Subtotal * 0.08m;
+                Assets.Order_Total = Assets.Subtotal + Assets.Tax;
+
+                if (Assets.Order_Total > 250.00m || Assets.Total_pizzas > 100)
+                {
+                    if (Assets.Order_Total > 250.00m && Assets.Total_pizzas > 100)
+                    {
+                        ViewData["Limit_Exceeded_Message"] = "Our policy only allows us to complete orders up to $250 and up to 100 pizzas at a time.";
+                    }
+                    else if (Assets.Order_Total > 250.00m)
+                    {
+                        ViewData["Limit_Exceeded_Message"] = "Our policy only allows us to complete orders up to $250 at a time.";
+                    }
+                    else if (Assets.Total_pizzas > 100)
+                    {
+                        ViewData["Limit_Exceeeded_Message"] = "Our policy only allows us to complete orders up to 100 pizzas at a time.";
+                    }
+
+                    Assets.Subtotal -= icost;
+                    Assets.Total_pizzas -= OrderItem.Amount_Pizzas;
+                    Assets.Tax = Assets.Subtotal * 0.08m;
+                    Assets.Order_Total = Assets.Subtotal + Assets.Tax;
+                    return View("Message");
+                }
+
+                //APPEND TO SEQUENCE FOR THIS ORDER
+                Assets.Preset_seq += OrderItem.Amount_Pizzas.ToString();
+                switch (model.Size)
+                {
+                    case "Small":
+                        /*
+                        if (model.NumCustoms > 0)
+                            Assets.Custom_seq += 'S';
+                        else if (model.NumPresets > 0)
+                            Assets.Preset_seq += 'S';
+                         */
                         Assets.Preset_seq += 'S';
-                     */
-                    Assets.Preset_seq += 'S';
-                    break;
-                case "Medium":
-                    /*
-                    if (model.NumCustoms > 0)
-                        Assets.Custom_seq += 'M';
-                    else if (model.NumPresets > 0)
+                        break;
+                    case "Medium":
+                        /*
+                        if (model.NumCustoms > 0)
+                            Assets.Custom_seq += 'M';
+                        else if (model.NumPresets > 0)
+                            Assets.Preset_seq += 'M';
+                        */
                         Assets.Preset_seq += 'M';
-                    */
-                    Assets.Preset_seq += 'M';
-                    break;
-                case "Large":
-                    /*
-                    if (model.NumCustoms > 0)
-                        Assets.Custom_seq += 'L';
-                    else if (model.NumPresets > 0)
+                        break;
+                    case "Large":
+                        /*
+                        if (model.NumCustoms > 0)
+                            Assets.Custom_seq += 'L';
+                        else if (model.NumPresets > 0)
+                            Assets.Preset_seq += 'L';
+                        */
                         Assets.Preset_seq += 'L';
-                    */
-                    Assets.Preset_seq += 'L';
-                    break;
-            }
+                        break;
+                }
 
-            switch(model.Crust)
-            {
-                case "Thick":
-                    /*
-                    if (model.NumCustoms > 0)
-                        Assets.Custom_seq += 'k';
-                    else if (model.NumPresets > 0)
+                switch (model.Crust)
+                {
+                    case "Thick":
+                        /*
+                        if (model.NumCustoms > 0)
+                            Assets.Custom_seq += 'k';
+                        else if (model.NumPresets > 0)
+                            Assets.Preset_seq += 'k';
+                        */
                         Assets.Preset_seq += 'k';
-                    */
-                    Assets.Preset_seq += 'k';
-                    break;
-                case "Thin":
-                    /*
-                    if (model.NumCustoms > 0)
-                        Assets.Custom_seq += 'n';
-                    else if (model.NumPresets > 0)
+                        break;
+                    case "Thin":
+                        /*
+                        if (model.NumCustoms > 0)
+                            Assets.Custom_seq += 'n';
+                        else if (model.NumPresets > 0)
+                            Assets.Preset_seq += 'n';
+                        */
                         Assets.Preset_seq += 'n';
-                    */
-                    Assets.Preset_seq += 'n';
-                    break;
-            }
+                        break;
+                }
 
-            return View(model);
+                Assets.Q.Add(OrderItem);
+                computed = false;
+            }
+            
+            return View(Assets.Q);
+        }
+
+        public IActionResult Step3()
+        {
+            if (Models.Assets.Session == false)
+            {
+                return Redirect("~/Home/Signin");
+            }
+            return View(Assets.Q);
+        }
+
+        public IActionResult Confirmation()
+        {
+            if (Models.Assets.Session == false)
+            {
+                return Redirect("~/Home/Signin");
+            }
+            Assets.OrderInfo.StoreId = Assets.ShopInfo.StoreId;
+            Assets.OrderInfo.Username = Assets.Current_user;
+            _PBrepository.AddOrder(Assets.OrderInfo, Assets.OrdertypeInfo, Assets.Preset_seq, "-", decimal.Round(Assets.Order_Total,2));
+            _PBrepository.UpdateInventory(Assets.OrderInfo.StoreId, Assets.NumPresets, Assets.NumCustoms, "subtract");
+            return View();
+        }
+
+        public IActionResult Cancel()
+        {
+            if (Models.Assets.Session == false)
+            {
+                return Redirect("~/Home/Signin");
+            }
+            Assets.Q.Clear();
+            Assets.ClearOrder();
+            
+            return View();
         }
 
         // return a list of available sizes

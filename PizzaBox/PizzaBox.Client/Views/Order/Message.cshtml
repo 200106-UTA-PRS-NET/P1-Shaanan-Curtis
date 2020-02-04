@@ -1,0 +1,22 @@
+﻿@{ 
+    ViewData["Title"] = "Order Online";
+}
+
+<header>
+    <h1>WOAH THERE!</h1>
+</header>
+<section>
+    @if (ViewData["Limit_Exceeded_Message"] != null)
+    {
+        <h3>@ViewData["Limit_Exceeded_Message"]</h3>
+    }
+    <br />
+    <div style="margin:auto;">
+        @if (Assets.Subtotal > 0)
+        {
+            <a asp-controller="Order" asp-action="Step2"><input type="button" value="RETURN TO CART" /></a>
+            <br/><br/>
+        }
+        <a asp-controller="Order" asp-action="Cancel"><input type="button" value="CANCEL ORDER" /></a>
+    </div>
+</section>

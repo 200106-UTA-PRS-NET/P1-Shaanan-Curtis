@@ -28,6 +28,10 @@ namespace PizzaBox.Client.Controllers
 
         public IActionResult Order()
         {
+            if(Models.Assets.Session == false)
+            {
+                return Redirect("~/Home/Signin");
+            }
             //pass locations, orders, ordertype
             var stores = _PBrepository.GetAllStores();
             Models.Assets.Stores = stores;

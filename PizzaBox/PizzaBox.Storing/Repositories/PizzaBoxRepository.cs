@@ -143,7 +143,7 @@ namespace PizzaBox.Storing.Repositories
             return query.SingleOrDefault();
         }
 
-        public void AddOrder(Orders orders, Ordertype ordertype, string preset, string custom)
+        public void AddOrder(Orders orders, Ordertype ordertype, string preset, string custom, decimal cost)
         {
             _dbContext.Add(orders);
             save();
@@ -156,6 +156,7 @@ namespace PizzaBox.Storing.Repositories
             DateTime date = DateTime.Now;
             ordertype.Dt = date.ToString("MM/dd/yyyy");
             ordertype.Tm = date.ToString("HH:mm");
+            ordertype.Cost = cost;
             _dbContext.Add(ordertype);
             save();
         }

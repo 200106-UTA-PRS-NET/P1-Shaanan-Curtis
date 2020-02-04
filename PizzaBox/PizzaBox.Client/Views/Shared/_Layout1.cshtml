@@ -20,11 +20,14 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <div id="nav1">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Store" asp-action="Order">Order Now</a>
-                            </div>
-                        </li>
+                        @if (Assets.Session == true)
+                        {
+                            <li class="nav-item">
+                                <div id="nav1">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Store" asp-action="Order">Order Now</a>
+                                </div>
+                            </li>
+                        }
                         <li class="nav-item">
                             <div id="nav2">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Store" asp-action="Menu">Menu</a>

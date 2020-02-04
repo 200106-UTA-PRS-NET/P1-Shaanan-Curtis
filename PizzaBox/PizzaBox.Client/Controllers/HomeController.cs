@@ -15,7 +15,7 @@ namespace PizzaBox.Client.Controllers
     public class HomeController : Controller
     {
         private readonly IPizzaBoxRepository _PBrepository;
-        public readonly User HCuser = new User();
+        public User HCuser = new User();
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(IPizzaBoxRepository PBrepository, ILogger<HomeController> logger)

@@ -18,6 +18,17 @@ for details on configuring this project to bundle and minify static web assets. 
     visibility:visible;
 }
 
+div.shopping-cart {
+    width: 700px;
+    height: 750px;
+    margin: auto;
+    text-align: center;
+    border:10px;
+    border-style:solid;
+    border-radius:20px;
+    border-color:orangered;
+}
+
 .specialty-buttons
 {
     margin:auto;
@@ -25,7 +36,6 @@ for details on configuring this project to bundle and minify static web assets. 
     height:50px;
     background-color:azure;
 }
-
 
 a.navbar-brand {
     white-space: normal;
