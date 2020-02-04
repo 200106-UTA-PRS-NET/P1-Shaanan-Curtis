@@ -41,7 +41,7 @@ namespace PizzaBox.Client.Models
         {
             _PBrepository = PBrepository;
             shop_orders = GetStoreOrders(id).Count();
-
+            shopid = id;
             if(shop_orders < 1)
             {
                 none = true;
