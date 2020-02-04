@@ -26,7 +26,7 @@ namespace PizzaBox.Client.Controllers
 
         public IActionResult Index(string error)
         {
-            if(error != null && error == "logout")
+            if (error != null && error == "logout")
             {
                 Signout();
             }
@@ -63,11 +63,22 @@ namespace PizzaBox.Client.Controllers
             //passed authentication
             ViewBag.Auth_Error = false;
             var u = _PBrepository.GetUserById(model.Username);
+            
             u.SessionLive = 1;
             _PBrepository.UpdateUser(u);
-
+           
             Assets.Current_user = u.Username;
-            Assets.Session = true;
+
+            if (model.Username.ToLower() == "admin")
+            {
+                Assets.StoreSession = true;
+                Assets.Session = false;
+            }
+            else
+            {
+                Assets.Session = true;
+                Assets.StoreSession = false;
+            }
             return View("Index");
         }
 
@@ -108,6 +119,7 @@ namespace PizzaBox.Client.Controllers
 
             Assets.Current_user = "";
             Assets.Session = false;
+            Assets.StoreSession = false;
             return View("Index");
         }
     }

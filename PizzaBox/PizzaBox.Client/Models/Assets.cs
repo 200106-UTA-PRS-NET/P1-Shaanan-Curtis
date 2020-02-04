@@ -38,8 +38,8 @@ namespace PizzaBox.Client.Models
         }
 
         //USER SESSION MODEL
-        public static bool Session { get; set; }
-        public static bool StoreSession { get; set; }
+        public static bool Session { get; set; } = false;
+        public static bool StoreSession { get; set; } = false;
         public static bool Ordered_Once { get; set; }
         public static System.DateTime today { get; set; } = DateTime.MinValue;
         public static System.DateTime tomorrow { get; set; } = DateTime.MinValue;

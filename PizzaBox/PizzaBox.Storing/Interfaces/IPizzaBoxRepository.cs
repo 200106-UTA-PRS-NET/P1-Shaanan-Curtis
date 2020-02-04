@@ -8,6 +8,7 @@ namespace PizzaBox.Storing.Interfaces
 {
     public interface IPizzaBoxRepository : IDisposable
     {
+        //useful for discovering empty inventories
         IEnumerable<Inventory> GetInventoryByType(string type = "preset", int search = 0);
 
         Inventory GetInventoryByStore(int storeid);

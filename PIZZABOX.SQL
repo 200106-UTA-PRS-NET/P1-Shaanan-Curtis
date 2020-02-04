@@ -57,5 +57,10 @@ CREATE TABLE ORDERTYPE
   ON UPDATE CASCADE
   ON DELETE CASCADE
 );
-INSERT INTO STORE(City,"State",Zip)VALUES('Arlington','TX','76001');
+INSERT INTO "USER"(Username,FullName,Pass,SessionLive)VALUES('ADMIN','Global Administrator','Password123',0);
+INSERT INTO "STORE"(City,"State",Zip)VALUES('Arlington','TX','76001');
+INSERT INTO "STORE"(City,"State",Zip)VALUES('Miami','FL','33101');
+INSERT INTO "STORE"(City,"State",Zip)VALUES('Charlottesville','VA','22901');
 INSERT INTO INVENTORY(StoreID,Preset,"Custom")VALUES(1,1000,1000);
+INSERT INTO INVENTORY(StoreID,Preset,"Custom")VALUES(2,1000,1000);
+INSERT INTO INVENTORY(StoreID,Preset,"Custom")VALUES(3,1000,1000);

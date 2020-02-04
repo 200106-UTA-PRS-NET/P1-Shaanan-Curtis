@@ -1,0 +1,31 @@
+﻿@model InventoryModel
+@{ 
+    ViewData["Title"] = "Inventory";
+}
+
+<h1>Inventory at @(Model.store.City), @Model.store.State</h1>
+<hr/>
+@if (Model.inventory == null)
+{
+    <h6>Inventory at shop #@(Model.store.StoreId.ToString().PadLeft(12-Model.store.StoreId.ToString().Length,'0'))  is currently unavailable.</h6>
+    <p>Please <a href="mailto:shaanancurtis@ieee.org?subject=Shop#@(Model.store.StoreId.ToString().PadLeft(12-Model.store.StoreId.ToString().Length,'0')) Inventory">contact</a> your administrator.</p>
+}
+else
+{
+    <table>
+        <tbody>
+            <tr class="d-table-row">
+                <td class="d-table-cell" style="font-weight:bold;">Store #@(Model.store.StoreId.ToString().PadLeft(12 - Model.store.StoreId.ToString().Length, '0'))</td>
+            </tr>
+            <tr class="d-table-row">
+                <td class="d-table-cell">Has enough ingredients for:</td>
+            </tr>
+            <tr class="d-table-row">
+                <td class="d-table-cell">@Model.inventory.Preset  specialty pizza(s)</td>
+            </tr>
+            <tr class="d-table-row">
+                <td class="d-table-cell">@Model.inventory.Custom  custom pizza(s)</td>
+            </tr>
+        </tbody>
+    </table>
+}

@@ -28,6 +28,8 @@
                                 </div>
                             </li>
                         }
+                        else
+                        { }
                         @if (Assets.Session == true)
                         {
                             <li class="nav-item">
@@ -36,17 +38,36 @@
                                 </div>
                             </li>
                         }
+                        else { }
+                        @if(Assets.StoreSession == true)
+                        {
+                            <li class="nav-item">
+                                <div id="nav1">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Store" asp-action="History">Order History</a>
+                                </div>
+                            </li>
+                        }
+                        else { }
                         <li class="nav-item">
                             <div id="nav2">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Store" asp-action="Menu">Menu</a>
                             </div>
                         </li>
+                        @if(Assets.StoreSession == true)
+                        {
+                            <li class="nav-item">
+                                <div id="nav1">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Store" asp-action="Inventory">Shop Inventory</a>
+                                </div>
+                            </li>
+                        }
+                        else { }
                         <li class="nav-item">
                             <div id="nav3">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Store" asp-action="Locations">Locations</a>
                             </div>
                         </li>
-                        @if (Assets.Session == true)
+                        @if (Assets.Session == true || Assets.StoreSession == true)
                         {
                             <li class="nav-item">
                                 <div id="nav3">
@@ -54,6 +75,7 @@
                                 </div>
                             </li>
                         }
+                        else { }
                     </ul>
                 </div>
             </div>

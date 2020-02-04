@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Inventory";
+}
+
+<h1>Shop Inventory</h1>
+<hr />
+<table>
+    <tbody>
+        @foreach (var item in Assets.Stores)
+        {
+            <tr>
+                <a asp-controller="Store" asp-action="Supplies" asp-route-id="@item.StoreId" title="Choose a store location to view its inventory">
+                    <div class="button-list">
+                        @item.City&emsp;&emsp;|&emsp;&emsp;@item.State
+                    </div>
+                </a>
+            </tr>
+        }
+    </tbody>
+</table>

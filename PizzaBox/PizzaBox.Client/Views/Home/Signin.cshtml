@@ -7,7 +7,7 @@
     <h1>Sign In</h1>
     <hr />
 
-    @if (Assets.Session == true)
+    @if (Assets.Session == true || Assets.StoreSession == true)
     {
         <p style="color:red;">Please wait until user is finished ordering.</p>
         <br />

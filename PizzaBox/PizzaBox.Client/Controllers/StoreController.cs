@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PizzaBox.Client.Models;
 using PizzaBox.Storing.Interfaces;
 
 namespace PizzaBox.Client.Controllers
@@ -16,15 +17,6 @@ namespace PizzaBox.Client.Controllers
         {
             _PBrepository = PBrepository;
         }
-
-        /*
-        // GET: /Store/
-        public IActionResult Index(string name)
-        {
-            //ViewData["message"] = "Hello " + name;
-            return View();
-        }
-        */
 
         public IActionResult Order()
         {
@@ -42,10 +34,91 @@ namespace PizzaBox.Client.Controllers
                 }
             }
 
-            //pass locations, orders, ordertype
+            //get all locations
             var stores = _PBrepository.GetAllStores();
             Models.Assets.Stores = stores;
             return View();
+        }
+
+        public IActionResult History()
+        {
+            if (Models.Assets.StoreSession == false)
+            {
+                return Redirect("~/Home/Signin");
+            }
+
+
+            return View();
+        }
+
+        public IActionResult ShopHistory()
+        {
+            if (Models.Assets.StoreSession == false)
+            {
+                return Redirect("~/Home/Signin");
+            }
+
+            //get all locations
+            var stores = _PBrepository.GetAllStores();
+            Models.Assets.Stores = stores;
+            return View();
+        }
+
+
+        public IActionResult Recent(int id)
+        {
+            if (Models.Assets.StoreSession == false)
+            {
+                return Redirect("~/Home/Signin");
+            }
+
+            Assets.ShopInfo = _PBrepository.GetStoreById(id);
+            ShopHistoryModel ShopHistory = new ShopHistoryModel(_PBrepository, id.ToString());
+            if (ShopHistory.none)
+                ViewData["No_History"] = "No orders have been made at this location.";
+
+            return View(ShopHistory);
+        }
+
+        public IActionResult AllOrders()
+        {
+            if (Models.Assets.StoreSession == false)
+            {
+                return Redirect("~/Home/Signin");
+            }
+
+            ShopHistoryModel AllHistory = new ShopHistoryModel(_PBrepository);
+            if (AllHistory.none)
+                ViewData["No_History"] = "No orders have been made.";
+
+            return View(AllHistory);
+        }
+
+        public IActionResult Inventory()
+        {
+            if (Models.Assets.StoreSession == false)
+            {
+                return Redirect("~/Home/Signin");
+            }
+
+            //get all locations
+            var stores = _PBrepository.GetAllStores();
+            Models.Assets.Stores = stores;
+            return View();
+        }
+
+        public IActionResult Supplies(int id)
+        {
+            if (Models.Assets.StoreSession == false)
+            {
+                return Redirect("~/Home/Signin");
+            }
+
+            var InventoryInfo = new InventoryModel();
+            InventoryInfo.inventory = _PBrepository.GetInventoryByStore(id);
+            InventoryInfo.store = _PBrepository.GetStoreById(id);
+
+            return View(InventoryInfo);
         }
 
         public IActionResult Menu()

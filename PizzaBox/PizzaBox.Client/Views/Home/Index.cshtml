@@ -1,4 +1,4 @@
-﻿@model PizzaBox.Storing.Entities.User;
+﻿
 @{
     ViewData["Title"] = "Home Page";
  }
@@ -6,7 +6,7 @@
     <div class="text-center">
         <h1 class="display-4">Welcome To Pizza Box</h1>
 
-        @if (Assets.Session == false)
+        @if (Assets.Session == false && Assets.StoreSession == false)
         {
             <a asp-controller="Home" asp-action="Signin">Sign In</a><span>&emsp;|&emsp;</span><a asp-controller="Home" asp-action="Signup">Sign Up</a>
         }

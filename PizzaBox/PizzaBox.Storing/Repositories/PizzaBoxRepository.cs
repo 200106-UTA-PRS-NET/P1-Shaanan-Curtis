@@ -184,6 +184,7 @@ namespace PizzaBox.Storing.Repositories
             newInventory.Preset = 1000;
             newInventory.Custom = 1000;
             AddInventory(newInventory);
+            save();
         }
 
         public IQueryable GetUsersByStoreId(int id)

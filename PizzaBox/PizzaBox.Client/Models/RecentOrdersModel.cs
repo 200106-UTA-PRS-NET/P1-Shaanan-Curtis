@@ -10,11 +10,14 @@ namespace PizzaBox.Client.Models
     public class RecentOrdersModel
     {
         private readonly IPizzaBoxRepository _PBrepository;
+
         public Orders[] O;
+
         public Ordertype[] OT;
+
         private long[] ids;
-        public int my_orders;
-        public bool none;
+        public int my_orders { get; set; }
+        public bool none { get; set; }
         public RecentOrdersModel(IPizzaBoxRepository PBrepository)
         {
             _PBrepository = PBrepository;
@@ -67,7 +70,7 @@ namespace PizzaBox.Client.Models
                     Dt = "",
                     Tm = ""
                 };
-                ids[i] = new int();
+                ids[i] = new long();
             }
         }
         private IEnumerable<Orders> GetAllOrders()
