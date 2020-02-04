@@ -39,6 +39,9 @@ namespace PizzaBox.Client.Models
 
         //USER SESSION MODEL
         public static bool Session { get; set; }
+        public static bool Ordered_Once { get; set; }
+        public static System.DateTime today { get; set; } = DateTime.MinValue;
+        public static System.DateTime tomorrow { get; set; } = DateTime.MinValue;
 
         //LOCATIONS MODEL
         public static IEnumerable<Store> Stores { get; set; }

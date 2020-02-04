@@ -32,6 +32,16 @@ namespace PizzaBox.Client.Controllers
             {
                 return Redirect("~/Home/Signin");
             }
+
+            //can only order from 1 location every 24 hours
+            if(Models.Assets.today != DateTime.MinValue && Models.Assets.tomorrow != DateTime.MinValue)
+            {
+                if (System.DateTime.Compare(Models.Assets.today, Models.Assets.tomorrow) < 0)
+                {
+                    return RedirectToAction("Step1", "Order", new { id = Models.Assets.ShopInfo.StoreId });
+                }
+            }
+
             //pass locations, orders, ordertype
             var stores = _PBrepository.GetAllStores();
             Models.Assets.Stores = stores;

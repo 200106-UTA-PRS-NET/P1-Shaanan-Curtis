@@ -24,7 +24,7 @@ namespace PizzaBox.Client.Controllers
             {
                 return Redirect("~/Home/Signin");
             }
-
+        
             Assets.ShopInfo = _PBrepository.GetStoreById(id);
             var sizes = GetAllSizes();
             var model = new TakeOrderModel();
@@ -312,6 +312,12 @@ namespace PizzaBox.Client.Controllers
             Assets.OrderInfo.Username = Assets.Current_user;
             _PBrepository.AddOrder(Assets.OrderInfo, Assets.OrdertypeInfo, Assets.Preset_seq, "-", decimal.Round(Assets.Order_Total,2));
             _PBrepository.UpdateInventory(Assets.OrderInfo.StoreId, Assets.NumPresets, Assets.NumCustoms, "subtract");
+   
+            Assets.Ordered_Once = true;
+
+            //reset timer per completed order (1 location/24 hour period)
+            Assets.today = new System.DateTime(System.DateTime.Today.Ticks);
+            Assets.tomorrow = new System.DateTime(System.DateTime.Today.AddDays(1).Ticks);
             return View();
         }
 
