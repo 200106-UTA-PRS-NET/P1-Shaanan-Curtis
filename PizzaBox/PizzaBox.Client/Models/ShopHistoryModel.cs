@@ -17,9 +17,11 @@ namespace PizzaBox.Client.Models
         public string shopid { get; set; }
         public int shop_orders { get; set; }
         public bool none { get; set; }
+        private bool all { get; set; }
         
         public ShopHistoryModel(IPizzaBoxRepository PBrepository)
         {
+            all = true;
             _PBrepository = PBrepository;
             shop_orders = GetStoreOrders().Count();
 
@@ -59,11 +61,23 @@ namespace PizzaBox.Client.Models
         private void MapOrderResults()
         {
             int i = 0;
-            foreach(var val in GetStoreOrders(shopid))
+            if(all)
             {
-                O[i] = val;
-                ids[i] = val.OrderId;
-                i++;
+                foreach(var val in GetStoreOrders())
+                {
+                    O[i] = val;
+                    ids[i] = val.OrderId;
+                    i++;
+                }
+            }
+            else
+            {
+                foreach (var val in GetStoreOrders(shopid))
+                {
+                    O[i] = val;
+                    ids[i] = val.OrderId;
+                    i++;
+                }
             }
 
             for(i=0;i<shop_orders; i++)
