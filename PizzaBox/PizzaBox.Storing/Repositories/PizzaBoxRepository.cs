@@ -137,7 +137,7 @@ namespace PizzaBox.Storing.Repositories
             return result;
         }
 
-        public Ordertype GetOrdertypeById(int id)
+        public Ordertype GetOrdertypeById(long id)
         {
             IQueryable<Ordertype> query = from ot in _dbContext.Ordertype where ot.OrderId == id select ot;
             return query.SingleOrDefault();

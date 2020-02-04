@@ -1,0 +1,98 @@
+﻿@model RecentOrdersModel
+@{ 
+    ViewData["Title"] = "Recent Orders";
+}
+
+<header>
+    <h1>@(Assets.Current_user)'s Recent Orders</h1>
+</header>
+<hr/>
+@if (ViewData["No_History"] != null)
+{
+    <h3>@ViewData["No_History"]</h3>
+    <a asp-area="" asp-controller="Store" asp-action="Order">Order Now</a>
+}
+else
+{
+    <section>
+        <table class="table">
+                <tbody>
+                    @{
+                        int i = 0;
+                        while (i < Model.my_orders)
+                        {
+                            int j = 0, n = 0;
+                            string nums, sequence;
+
+                            //DISPLAY ORDER# AND DATE/TIME
+
+                            <tr class="d-table-row">
+                                <td class="d-table-cell" style="font-weight:bold;background-color:lightgrey;">Order#@(Model.O[i].OrderId.ToString().PadLeft(12 - Model.O[i].OrderId.ToString().Length, '0'))</td>
+                            </tr>
+                            <tr class="d-table-row">
+                                <td class="d-table-cell">@(Model.OT[i].Dt) @(Model.OT[i].Tm)</td>
+                            </tr>
+
+                            //PRESET TRANSLATION TO HUMAN-READABLE
+                            do
+                            {
+                                //RESET TRANSLATED SEQUENCE
+                                nums = "";
+                                sequence = "";
+
+                                if (Model.OT[i].Preset.Length == 0 || Model.OT[i].Preset[0] == '-')
+                                    break;
+
+                                //GET FULL DIGIT FROM ORIGINAL SEQUENCE UNTIL ISLETTER
+                                while (j < Model.OT[i].Preset.Length && Char.IsDigit(Model.OT[i].Preset[j]))
+                                {
+                                    nums += Model.OT[i].Preset[j];
+                                    j++;
+                                }
+
+                                //NUMS IS NOT A NUMBER? SKIP
+                                if (!int.TryParse(nums, out n))
+                                    break;
+
+                                //GET FULL CHAR SEQUENCE FROM ORIGINAL UNTIL NEXT DIGIT/END
+                                while (j < Model.OT[i].Preset.Length && Char.IsLetter(Model.OT[i].Preset[j]))
+                                {
+                                    switch (Model.OT[i].Preset[j])
+                                    {
+                                        case 'S':
+                                            sequence += "Small Preset, ";
+                                            break;
+                                        case 'M':
+                                            sequence += "Medium Preset, ";
+                                            break;
+                                        case 'L':
+                                            sequence += "Large Preset, ";
+                                            break;
+                                        case 'k':
+                                            sequence += "thick crust pizza(s)";
+                                            break;
+                                        case 'n':
+                                            sequence += "thin crust pizza(s)";
+                                            break;
+                                    }
+                                    j++;
+                                }
+                                <tr class="d-table-row">
+                                    <td class="d-table-cell">@(Convert.ToInt32(nums))&emsp;@(sequence)</td>
+                                </tr>
+                            } while (j < Model.OT[i].Preset.Length);
+
+                            <tr class="d-table-row">
+                                <td class="d-table-cell" style="font-weight:bold;">Total Cost: $@(Model.OT[i].Cost)</td>
+                            </tr>
+
+                            //SPACER
+                            <tr class="d-table-row"><td class="d-table-cell"></td></tr>
+
+                            i++;
+                        }
+                    }
+                </tbody>
+        </table>
+    </section>
+}

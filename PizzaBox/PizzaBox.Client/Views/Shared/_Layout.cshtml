@@ -28,6 +28,14 @@
                                 </div>
                             </li>
                         }
+                        @if (Assets.Session == true)
+                        {
+                            <li class="nav-item">
+                                <div id="nav1">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Recent">My Orders</a>
+                                </div>
+                            </li>
+                        }
                         <li class="nav-item">
                             <div id="nav2">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Store" asp-action="Menu">Menu</a>

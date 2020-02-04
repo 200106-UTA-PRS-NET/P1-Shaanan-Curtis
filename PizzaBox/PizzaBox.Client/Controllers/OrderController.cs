@@ -20,7 +20,7 @@ namespace PizzaBox.Client.Controllers
 
         public IActionResult Step1(int id)
         {
-            if (Models.Assets.Session == false)
+            if (Assets.Session == false)
             {
                 return Redirect("~/Home/Signin");
             }
@@ -295,7 +295,7 @@ namespace PizzaBox.Client.Controllers
 
         public IActionResult Step3()
         {
-            if (Models.Assets.Session == false)
+            if (Assets.Session == false)
             {
                 return Redirect("~/Home/Signin");
             }
@@ -304,7 +304,7 @@ namespace PizzaBox.Client.Controllers
 
         public IActionResult Confirmation()
         {
-            if (Models.Assets.Session == false)
+            if (Assets.Session == false)
             {
                 return Redirect("~/Home/Signin");
             }
@@ -323,7 +323,7 @@ namespace PizzaBox.Client.Controllers
 
         public IActionResult Cancel()
         {
-            if (Models.Assets.Session == false)
+            if (Assets.Session == false)
             {
                 return Redirect("~/Home/Signin");
             }
@@ -331,6 +331,20 @@ namespace PizzaBox.Client.Controllers
             Assets.ClearOrder();
             
             return View();
+        }
+
+        public IActionResult Recent()
+        {
+            if(Assets.Session == false)
+            {
+                return Redirect("~/Home/Signin");
+            }
+
+            RecentOrdersModel OrderHistory = new RecentOrdersModel(_PBrepository);
+            if(OrderHistory.none)
+                ViewData["No_History"] = "You have not ordered anything yet.";
+            
+            return View(OrderHistory);
         }
 
         // return a list of available sizes

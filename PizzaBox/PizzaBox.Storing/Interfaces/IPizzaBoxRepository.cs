@@ -20,7 +20,7 @@ namespace PizzaBox.Storing.Interfaces
 
         IEnumerable<Ordertype> GetAllOrdertypes();
 
-        Ordertype GetOrdertypeById(int id);
+        Ordertype GetOrdertypeById(long id);
 
         void AddOrder(Orders orders, Ordertype ordertype, string preset, string custom, decimal cost);
 

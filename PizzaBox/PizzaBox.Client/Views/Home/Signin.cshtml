@@ -3,29 +3,38 @@
     ViewData["Title"] = "Sign In";
 }
 
-<h1>Sign In</h1>
-<hr />
+<div style="width:400px;border:2px;border-style:solid;border-color:aliceblue;border-radius:20px; padding:50px;text-align:center;">
+    <h1>Sign In</h1>
+    <hr />
 
-@if (Assets.Session == true)
-{
-    <p style="color:red;">Please wait until user is finished ordering.</p>
-    <br />
-    <a asp-controller="Home" asp-action="Index" asp-route-error="logout">Go Home</a>
-}
-else
-{
-    @if (ViewBag.Auth_Error == true)
+    @if (Assets.Session == true)
     {
-        <p style="color:red;">Username/password authentication failed.</p>
+        <p style="color:red;">Please wait until user is finished ordering.</p>
+        <br />
+        <a asp-controller="Home" asp-action="Index" asp-route-error="logout">Go Home</a>
     }
+    else
+    {
+        @if (ViewBag.Auth_Error == true)
+        {
+            <p style="color:red;">Username/password authentication failed.</p>
+        }
 
-    <form asp-controller="Home" asp-action="Signin" method="post">
-        Username:
-        @Html.TextBoxFor(u => u.Username, new { placeholder = "Enter Username", required = "required" })
-        <br /><br />
-        Password:
-        @Html.PasswordFor(u => u.Pass, new { placeholder = "Enter Password", required = "required" })
-        <br /><br />
-        <input type="submit" />
-    </form>
-}
+
+        <form asp-controller="Home" asp-action="Signin" method="post">
+            Username:
+            @Html.TextBoxFor(u => u.Username, new { placeholder = "Enter Username", required = "required" })
+            <br /><br />
+            Password:
+            @Html.PasswordFor(u => u.Pass, new { placeholder = "Enter Password", required = "required" })
+            <br /><br />
+            <input type="submit" />
+        </form>
+        <hr />
+        <div style="border:1px;border-style:solid;border-color:lightgrey;padding:20px;">
+            Don't have an account?
+            <br/>
+            <a asp-area="" asp-controller="Home" asp-action="Signup">Sign up</a>
+        </div>
+    }
+</div>
