@@ -5,7 +5,7 @@
 
 ## CI Start
 trigger:
-- master
+- azure-pipelines
 
 pool:
   vmImage: 'windows-latest'
