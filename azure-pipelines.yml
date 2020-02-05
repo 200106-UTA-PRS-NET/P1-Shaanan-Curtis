@@ -1,43 +1,75 @@
-# ASP.NET Core (.NET Framework)
-# Build and test ASP.NET Core projects targeting the full .NET Framework.
-# Add steps that publish symbols, save build artifacts, and more:
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
+## CI Start
 trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-16.04' #changed from windows-latest
+  vmImage: 'windows-latest'
 
 variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  pathtosolution: 'PizzaBox/'
+  pathtoproject: 'PizzaBox/PizzaBox.Client'
+  pathtotest: 'PizzaBox/PizzaBox.Testing'
 
 steps:
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'P1SCSonarServiceConnection'
+    organization: 'ordera'
+    scannerMode: 'MSBuild'
+    projectKey: 'p1-shaanan-curtis'
+    projectName: 'p1-shaanan-curtis'
+    extraProperties: |
+      sonar.cs.opencover.reportsPaths="$(Build.ArtifactStagingDirectory)/coverage/*"
+      sonar.cs.vstest.reportsPaths="$(Build.ArtifactStagingDirectory)/test/*.trx"
+      sonar.exclusions=**/wwwroot/lib/**/*
+- script: 
+    dotnet build --configuration $(buildConfiguration)
+  workingDirectory: $(pathtosolution)
+  displayName: 'dotnet build $(buildConfiguration)'
 
-#To build project via .NET Core Task rather than dotnet build
+- script: dotnet test
+    --configuration $(buildConfiguration)
+    --logger trx
+    --no-build
+    --results-directory $(Build.ArtifactStagingDirectory)/test/
+    /p:CollectCoverage=true
+    /p:CoverletOutputFormat=opencover
+    /p:CoverletOutput="$(Build.ArtifactStagingDirectory)/coverage/"
+  workingDirectory: $(pathtosolution)
+  displayName: 'dotnet test'
 - task: DotNetCoreCLI@2
-  displayName: Build
   inputs:
-    command: build
-    projects: '**/*.csproj'
-    arguments: '--configuration Release' # Update this to match your need
+    command: 'test'
+    projects: '$(pathtotest)'
+    workingDirectory: '$(pathtosolution)'
 
-- task: NuGetToolInstaller@1
-
-- task: NuGetCommand@2
+- task: SonarCloudAnalyze@1
+- task: SonarCloudPublish@1
   inputs:
-    restoreSolution: '$(solution)'
+    pollingTimeoutSec: '300'
 
-- task: VSBuild@1
+- task: DotNetCoreCLI@2
   inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    command: 'publish'
+    arguments: --configuration $(buildConfiguration)
+    publishWebProjects: true
+    zipAfterPublish: true
+    workingDirectory: '$(pathtosolution)'
+  displayName: 'dotnet publish + zip'
+####--- CI END
 
-- task: VSTest@2
+## CDelivery Start taking artifact as an input
+- task: AzureWebApp@1
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    azureSubscription: 'Visual Studio Enterprise with MSDN(581982a8-2cbb-485e-b313-4da4b27d42f1)'
+    appType: 'webAppLinux'
+    appName: 'emsutapipeline'
+    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+
+    ## CD ends
