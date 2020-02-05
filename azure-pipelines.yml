@@ -64,12 +64,9 @@ steps:
   displayName: 'dotnet publish + zip'
 ####--- CI END
 
-## CDelivery Start taking artifact as an input
 - task: AzureWebApp@1
   inputs:
-    azureSubscription: 'Visual Studio Enterprise with MSDN(581982a8-2cbb-485e-b313-4da4b27d42f1)'
+    azureSubscription: 'Azure subscription 1(396ce4c5-bc45-4835-91e3-1354d6969b00)'
     appType: 'webAppLinux'
-    appName: 'emsutapipeline'
+    appName: 'PizzaboxCo'
     package: '$(System.DefaultWorkingDirectory)/**/*.zip'
-
-    ## CD ends
