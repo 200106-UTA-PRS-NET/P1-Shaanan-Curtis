@@ -63,7 +63,7 @@ steps:
     workingDirectory: '$(pathtosolution)'
   displayName: 'dotnet publish + zip'
 ####--- CI END
-
+#
 - task: AzureWebApp@1
   inputs:
     azureSubscription: 'Azure subscription 1(396ce4c5-bc45-4835-91e3-1354d6969b00)'
