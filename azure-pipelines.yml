@@ -22,8 +22,8 @@ steps:
     SonarCloud: 'P1SCSonarServiceConnection'
     organization: 'ordera'
     scannerMode: 'MSBuild'
-    projectKey: 'p1-shaanan-curtis'
-    projectName: 'p1-shaanan-curtis'
+    projectKey: 'P1-Shaanan-Curtis'
+    projectName: 'P1-Shaanan-Curtis'
     extraProperties: |
       sonar.cs.opencover.reportsPaths="$(Build.ArtifactStagingDirectory)/coverage/*"
       sonar.cs.vstest.reportsPaths="$(Build.ArtifactStagingDirectory)/test/*.trx"
