@@ -3,7 +3,6 @@
 # Add steps that run tests, create a NuGet package, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
-## CI Start
 trigger:
 - azure-pipelines
 
@@ -11,27 +10,42 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  buildConfiguration: 'Release'
+  solution: '**/*.sln'
   pathtosolution: 'PizzaBox/'
-  pathtoproject: 'PizzaBox/PizzaBox.Client'
-  pathtotest: 'PizzaBox/PizzaBox.Testing'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
 
 steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
 - task: SonarCloudPrepare@1
   inputs:
     SonarCloud: 'P1SCSonarServiceConnection'
     organization: 'ordera'
     scannerMode: 'MSBuild'
     projectKey: 'P1-Shaanan-Curtis'
-    projectName: 'P1-Shaanan-Curtis'
     extraProperties: |
       sonar.cs.opencover.reportsPaths="$(Build.ArtifactStagingDirectory)/coverage/*"
       sonar.cs.vstest.reportsPaths="$(Build.ArtifactStagingDirectory)/test/*.trx"
       sonar.exclusions=**/wwwroot/lib/**/*
-- script: 
-    dotnet build --configuration $(buildConfiguration)
-  workingDirectory: $(pathtosolution)
-  displayName: 'dotnet build $(buildConfiguration)'
+
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: VSTest@2
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: SonarCloudAnalyze@1
 
 - script: dotnet test
     --configuration $(buildConfiguration)
@@ -42,28 +56,20 @@ steps:
     /p:CoverletOutputFormat=opencover
     /p:CoverletOutput="$(Build.ArtifactStagingDirectory)/coverage/"
   workingDirectory: $(pathtosolution)
-  displayName: 'dotnet test'
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'test'
-    projects: '$(pathtotest)'
-    workingDirectory: '$(pathtosolution)'
 
-- task: SonarCloudAnalyze@1
 - task: SonarCloudPublish@1
   inputs:
     pollingTimeoutSec: '300'
-
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
     arguments: --configuration $(buildConfiguration)
     publishWebProjects: true
     zipAfterPublish: true
-    workingDirectory: '$(pathtosolution)'
+    workingDirectory: $(pathtosolution)
   displayName: 'dotnet publish + zip'
-####--- CI END
-#
+
+
 - task: AzureWebApp@1
   inputs:
     azureSubscription: 'Azure subscription 1(396ce4c5-bc45-4835-91e3-1354d6969b00)'
